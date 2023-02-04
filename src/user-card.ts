@@ -1,16 +1,22 @@
 import { LitElement, html, css } from "lit";
 import { customElement, property } from "lit/decorators.js";
-import { User } from "./types/user";
 import catImage from "./assets/images/cat.jpg";
 import { usersData } from "./data/user";
 
 @customElement("user-card")
 export class UserCard extends LitElement {
-  @property()
-  user: User = {} as User;
+  static properties = {
+    user: {
+      type: Object,
+      attribute: "user",
+    },
+  };
 
   @property({ type: String })
   topImage = "";
+
+  @property()
+  subImage = [];
 
   @property({ type: Boolean })
   loading = true;
@@ -32,8 +38,9 @@ export class UserCard extends LitElement {
 
   connectedCallback() {
     super.connectedCallback();
-    this.user = usersData[this.index];
+    this.subImage = this.user.subImages.split(", ");
     this.topImage = this.user.topImage;
+    console.log(this.subImage);
     this.loading = false;
   }
 
@@ -62,7 +69,7 @@ export class UserCard extends LitElement {
             class="subImg"
             @click=${this._imageClick}
           />
-          ${this.user?.subImages.map(
+          ${this.subImage.map(
             (subImage) => html`<img
               src="${subImage}"
               class="subImg"
