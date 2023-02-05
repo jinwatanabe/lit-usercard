@@ -21,42 +21,15 @@ export class UserCard extends LitElement {
   @property({ type: Boolean })
   loading = true;
 
-  @property({ type: Number, attribute: "index" })
-  index = 0;
-
-  _prevProfile() {
-    this.index = this.index - 1;
-    this.index = this.index < 0 ? 0 : this.index;
-    this.user = usersData[this.index];
-    this.topImage = this.user.topImage;
-  }
-  _nextProfile() {
-    this.index = this.index + 1;
-    this.user = usersData[this.index];
-    this.topImage = this.user.topImage;
-  }
-
   connectedCallback() {
     super.connectedCallback();
-    this.subImage = this.user.subImages.split(", ");
     this.topImage = this.user.topImage;
-    console.log(this.subImage);
+    this.subImage = this.user.subImages;
     this.loading = false;
   }
 
   private _imageClick(e: Event) {
     this.topImage = catImage;
-  }
-
-  navigator() {
-    return html`
-      <div
-        style="padding-top: 10px; display: flex; justify-content: space-between; width: 180px; padding-left: 10px; padding-right: 10px;"
-      >
-        <button @click=${this._prevProfile} class="btn">前へ</button>
-        <button @click=${this._nextProfile} class="btn">次へ</button>
-      </div>
-    `;
   }
 
   userCards() {
@@ -95,7 +68,6 @@ export class UserCard extends LitElement {
           </div>
         </div>
       </div>
-      ${this.navigator()}
     `;
   }
 
@@ -103,10 +75,7 @@ export class UserCard extends LitElement {
     if (this.loading) {
       return html` <div class="circle"></div> `;
     } else if (!this.user?.username) {
-      return html`
-        <h1>ユーザーがいません</h1>
-        ${this.navigator()}
-      `;
+      return html` <h1>ユーザーがいません</h1> `;
     } else {
       return this.userCards();
     }

@@ -9,6 +9,28 @@
     <script type="module" src="/src/user-select.ts"></script>
   </head>
   <body>
-    <user-select></user-select>
+    <script>
+      document.addEventListener("DOMContentLoaded", () => {
+        const instance = document.querySelector("#user");
+        instance.config = {
+          data: [
+            {
+              username: "watanabe",
+              age: "25",
+              prefecture: "東京都",
+              topImage: "https://source.unsplash.com/random?human",
+              subImages: [
+                "https://source.unsplash.com/random?fruit",
+                "https://source.unsplash.com/random?sweets",
+                "https://source.unsplash.com/random?cat",
+                "https://source.unsplash.com/random?school",
+              ],
+              selfIntroduction: "これはテストユーザーです",
+            },
+          ],
+        };
+      });
+    </script>
+    <user-select id="user"></user-select>
   </body>
 </html>
