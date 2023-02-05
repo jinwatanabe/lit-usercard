@@ -1,7 +1,6 @@
 import { LitElement, html, css } from "lit";
 import { customElement, property } from "lit/decorators.js";
 import catImage from "./assets/images/cat.jpg";
-import { usersData } from "./data/user";
 
 @customElement("user-card")
 export class UserCard extends LitElement {
@@ -11,6 +10,15 @@ export class UserCard extends LitElement {
       attribute: "user",
     },
   };
+
+  updated(changedProperties: any) {
+    changedProperties.forEach((oldValue: any, propName: any) => {
+      if (propName === "user") {
+        this.topImage = this.user.topImage;
+        this.subImage = this.user.subImages;
+      }
+    });
+  }
 
   @property({ type: String })
   topImage = "";
